@@ -1,15 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css' 
+import Canvas from './Components/Canvas'
+import {useState} from 'react'
 
-import Canvas from './Componet/canvas'
- // Make sure this path matches your folder structure
+//Isme UseEffect use hua hai aur osko import nhi hua hai toh Import it
 
 function App() {
-  // console.log("app")
+  const [index, setIndex] = useState(0);
   return (
-    <div className="w-full min-h-screen bg-red">
-   <Canvas/>
+    <div className="w-full min-h-screen bg-black text-white">
+  
+ <Canvas startIndex={0}/>
+
+     {/* <Header/> */}
     </div>
   )
 }
