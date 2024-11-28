@@ -1,5 +1,5 @@
 import React from 'react'
-import CanvasImages from '../CanvasImages'
+import canvasImages from '../CanvasImages'
 import { useEffect,useRef,useState } from 'react'
 import {useGSAP} from '@gsap/react';
 import gsap from 'gsap';
@@ -21,28 +21,33 @@ export default function Canvas({details}) {
         })
     })
     useEffect(() => {
-        //Canvas is the element that we are refering to
+        const scale = window.devicePixelRatio;
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        
-        const image = new Image();
-        image.src = CanvasImages[index.value];
-        
-        image.onload = () => {
-            canvas.width = image.width;
-            canvas.height = image.height;
-            ctx.drawImage(image, 0, 0);
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+        img.src = canvasImages[index.value];
+        img.onload = () => {
+          canvas.width = canvas.offsetWidth * scale;
+          canvas.height = canvas.offsetHeight * scale;
+          canvas.style.width = canvas.offsetWidth + "px";
+          canvas.style.height = canvas.offsetHeight + "px";
+    
+          ctx.scale(scale, scale);
+          ctx.drawImage(img, 0, 0, canvas.offsetWidth, canvas.offsetHeight);
         };
-        
-    }, [index.value]);//Array means that the useEffect will run only once when the component is mounted
+      }, [index]);
+    //Array means that the useEffect will run only once when the component is mounted
     return (
         <canvas 
           ref={canvasRef}
           id="Canvas"
-          style={{
-            width: `${size}px`,
-            height: `${size}px`
-          }}
+          className='absolute'
+         style={{weight:`${size*1.8}px`,
+          height:`${size*1.8}px`,
+          top:`${top}%`,
+          left:`${left}%`,
+          zIndex:`${zIndex}`
+        }}
         />
       )
    
